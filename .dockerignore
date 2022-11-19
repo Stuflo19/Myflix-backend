@@ -1,0 +1,5 @@
+dockerfile
+.gitignore
+README.md
+.env
+.flaskenv

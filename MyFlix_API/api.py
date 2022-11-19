@@ -6,7 +6,7 @@ import sys
 
 api_page = Blueprint('api', __name__)
 
-@api_page.route('/', methods=['GET'])
+@api_page.route('/movies', methods=['GET'])
 @cross_origin()
 def api_get_movies():
     response = get_movie()
@@ -24,9 +24,15 @@ def verification():
         else:
             return {"token": "error"}
 
+@api_page.route('/health')
+def health():
+    return '', 200
+
+@api_page.route('/ready')
+def ready():
+    return '', 200
+
 # @api_page.route('/testsql', methods=['GET'])
 # def testsql():
 #     if not verify('stu@stu.com', 'password'):
 #         return jsonify(token="123")
-
-
