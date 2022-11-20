@@ -1,9 +1,9 @@
 #demo/settings.py
-from os import environ 
+import os
 
-MONGO_URI = environ.get('MONGO_URI')
+MONGO_URI = os.getenv('MONGO_URI')
 
-MYSQL_DATABASE_HOST = environ.get('MYSQL_HOST')
-MYSQL_DATABASE_DB = environ.get('MYSQL_DB')
-MYSQL_DATABASE_USER = environ.get('MYSQL_USER')
-MYSQL_DATABASE_PASSWORD = environ.get('MYSQL_PASSWORD')
+MYSQL_DATABASE_HOST = os.getenv('MYSQL_HOST')
+MYSQL_DATABASE_DB = os.getenv('MYSQL_DB')
+MYSQL_DATABASE_USER = os.getenv('MYSQL_USER')
+MYSQL_DATABASE_PASSWORD = os.getenv('MYSQL_PASSWORD')
