@@ -51,5 +51,14 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 5000
+        env:
+          - name: MYSQL_HOST
+            value: mysql
+          - name: MYSQL_USER
+            value: root
+          - name: MYSQL_PASSWORD
+            value: password123
+          - name: MYSQL_DB
+            value: netflix
       imagePullSecrets:
       - name: regcred
