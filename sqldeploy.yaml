@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    db: mysql
+spec:
+  selector:
+    db: mysql
+  ports:
+  - port: 3306
+    targetPort: 3306
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-mysql
+  labels: 
+    db: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      db: mysql
+  template:
+    metadata:
+      name: mysql-pod
+      labels:
+        db: mysql
+    spec:
+      containers:
+      - name: mysql-container
+        image: mysql
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: sql-pvc
+          mountPath: /var/lib/mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: password123
+      volumes:
+      - name: sql-pvc
+        persistentVolumeClaim:
+          claimName: sql-pvc

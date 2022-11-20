@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: regcred
+data:
+  .dockerconfigjson: DOCKER_CONFIG
+type: kubernetes.io/dockerconfigjson
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-api
+  namespace: backend
+  labels:
+    backend: flask-api
+spec:
+  selector:
+    app: flask-api
+  ports:
+  - port: 5000
+    targetPort: 5000
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaskapi
+spec:
+  selector:
+    matchLabels:
+      app: flaskapi
+  template:
+    metadata:
+      name: flaskpods
+      namespace: backend
+      labels:
+        app: flaskapi
+        backend: flaskapi
+    spec:
+      containers:
+      - name: myapp
+        image: stuflo/myflix:flask-prod
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
+      imagePullSecrets:
+      - name: regcred
