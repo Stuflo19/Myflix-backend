@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql
+  namespace: myflix
   labels:
     db: mysql
 spec:
@@ -17,6 +18,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: backend-mysql
+  namespace: myflix
   labels: 
     db: mysql
 spec:
@@ -27,6 +29,7 @@ spec:
   template:
     metadata:
       name: mysql-pod
+      namespace: mymflix
       labels:
         db: mysql
     spec:

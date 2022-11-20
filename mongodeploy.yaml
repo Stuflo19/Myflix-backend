@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mongo
+  namespace: myflix
   labels:
     db: mongo
 spec:
@@ -16,7 +17,8 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend
+  name: backend-mongo
+  namespace: myflix
   labels: 
     db: mongo
 spec:
@@ -27,6 +29,7 @@ spec:
   template:
     metadata:
       name: db-pods
+      namespace: myflix
       labels:
         db: mongo
     spec:
