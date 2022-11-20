@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: regcred
+data:
+  .dockerconfigjson: 
+    ewogICJhdXRocyI6IHsKICAgICJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7CiAgICAgICJhdXRoIjogImMzUjFabXh2T21zelZXRnhORmhlSVNOWFVnPT0iCiAgICB9CiAgfSwKICAiY3JlZEhlbHBlcnMiOiB7CiAgICAiZ2NyLmlvIjogImdjbG91ZCIsCiAgICAidXMuZ2NyLmlvIjogImdjbG91ZCIsCiAgICAiZXUuZ2NyLmlvIjogImdjbG91ZCIsCiAgICAiYXNpYS5nY3IuaW8iOiAiZ2Nsb3VkIiwKICAgICJzdGFnaW5nLWs4cy5nY3IuaW8iOiAiZ2Nsb3VkIiwKICAgICJtYXJrZXRwbGFjZS5nY3IuaW8iOiAiZ2Nsb3VkIgogIH0KfQ==
+type: kubernetes.io/dockerconfigjson
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-api
+  namespace: myflix
+  labels:
+    backend: flask-api
+spec:
+  selector:
+    app: flask-api
+  ports:
+  - port: 5000
+    targetPort: 5000
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flaskapi
+  namespace: myflix
+spec:
+  selector:
+    matchLabels:
+      app: flaskapi
+  template:
+    metadata:
+      name: flaskpods
+      namespace: myflix
+      labels:
+        app: flaskapi
+        backend: flaskapi
+    spec:
+      containers:
+      - name: flaskapi
+        image: stuflo/myflix:flask-prod
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 5000
+      imagePullSecrets:
+      - name: regcred
