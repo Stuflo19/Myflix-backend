@@ -29,7 +29,7 @@ spec:
   template:
     metadata:
       name: mysql-pod
-      namespace: mymflix
+      namespace: myflix
       labels:
         db: mysql
     spec:

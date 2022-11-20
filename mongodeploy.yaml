@@ -28,7 +28,7 @@ spec:
       db: mongo
   template:
     metadata:
-      name: db-pods
+      name: mongo-pods
       namespace: myflix
       labels:
         db: mongo

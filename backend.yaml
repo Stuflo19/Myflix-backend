@@ -3,8 +3,7 @@ kind: Secret
 metadata:
   name: regcred
 data:
-  .dockerconfigjson: 
-    ewogICJhdXRocyI6IHsKICAgICJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7CiAgICAgICJhdXRoIjogImMzUjFabXh2T21zelZXRnhORmhlSVNOWFVnPT0iCiAgICB9CiAgfSwKICAiY3JlZEhlbHBlcnMiOiB7CiAgICAiZ2NyLmlvIjogImdjbG91ZCIsCiAgICAidXMuZ2NyLmlvIjogImdjbG91ZCIsCiAgICAiZXUuZ2NyLmlvIjogImdjbG91ZCIsCiAgICAiYXNpYS5nY3IuaW8iOiAiZ2Nsb3VkIiwKICAgICJzdGFnaW5nLWs4cy5nY3IuaW8iOiAiZ2Nsb3VkIiwKICAgICJtYXJrZXRwbGFjZS5nY3IuaW8iOiAiZ2Nsb3VkIgogIH0KfQ==
+  .dockerconfigjson: DOCKER_CONFIG
 type: kubernetes.io/dockerconfigjson
 
 ---
@@ -15,10 +14,10 @@ metadata:
   name: flask-api
   namespace: myflix
   labels:
-    backend: flask-api
+    backend: flaskapi-backend
 spec:
   selector:
-    app: flask-api
+    backend: flaskapi-backend
   ports:
   - port: 5000
     targetPort: 5000
@@ -28,23 +27,24 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flaskapi
+  name: flaskapi-deployment
   namespace: myflix
 spec:
+  replicas: 1
   selector:
     matchLabels:
-      app: flaskapi
+      backend: flaskapi-backend
   template:
     metadata:
       name: flaskpods
       namespace: myflix
       labels:
-        app: flaskapi
-        backend: flaskapi
+        backend: flaskapi-backend
     spec:
       containers:
       - name: flaskapi
         image: stuflo/myflix:flask-prod
+        imagePullPolicy: Always
         resources:
           limits:
             memory: "128Mi"
