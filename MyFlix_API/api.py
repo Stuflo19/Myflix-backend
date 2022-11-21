@@ -13,16 +13,16 @@ def api_get_movies():
 
     return jsonify(response)
 
-@api_page.route('/verify', methods=['POST'])
+@api_page.route('/verify', methods=['GET', 'POST'])
 @cross_origin()
 def verification():
     if request.method == 'POST':
         username = request.json['username']
         password = request.json['password']
         if verify(username,password):
-            return {"token": username}
+            return {"token": username}, 200
         else:
-            return {"token": "error"}
+            return {"token": "error"}, 200
 
 @api_page.route('/health')
 def health():

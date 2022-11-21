@@ -17,11 +17,6 @@ ENV FLASK_DEBUG 1
 
 ENV MONGO_URI mongodb://root:password123@mongo/sample_mflix?authSource=admin
 
-ENV MYSQL_HOST sql
-ENV MYSQL_USER root
-ENV MYSQL_PASSWORD password123
-ENV MYSQL_DB netflix
-
 WORKDIR /app
 
 COPY . /app
