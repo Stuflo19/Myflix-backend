@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify, current_app, make_response
 from .mongodb import get_movie
 from .sqldb import verify
+from .stream import initiate_stream
 from flask_cors import cross_origin
 import sys
 
@@ -23,6 +24,17 @@ def verification():
             return {"token": username}, 200
         else:
             return {"token": "error"}, 200
+
+@api_page.route('/stream', methods=['GET', 'POST'])
+@cross_origin()
+def start_stream():
+    filename = request.json['filename']
+    response = initiate_stream(filename)
+    if response == "success":
+        return '', 200
+    if response == "error":
+        return '', 404
+
 
 @api_page.route('/health')
 def health():
