@@ -15,7 +15,7 @@ RUN pip3 install gunicorn
 ENV FLASK_APP MyFlix_API.app
 ENV FLASK_DEBUG 1
 
-ENV MONGO_URI mongodb://root:password123@mongo/sample_mflix?authSource=admin
+ENV MONGO_URI mongodb://root:password123@mongo/myflix?authSource=admin
 
 WORKDIR /app
 

@@ -14,9 +14,13 @@ def get_mongodb():
 # Use LocalProxy to read the global db instance with just `db`
 mongodb = LocalProxy(get_mongodb)
 
-def get_movie():
-    movie = list(mongodb.movies.find().limit(20))
+def get_movie(genre):
+    movie = list(mongodb.movies.find(genre))
     return json_response(movie)
+
+def get_genres():
+    genres = list(mongodb.genres.find())
+    return json_response(genres)
 
 def json_response(payload, status=200):
   return (dumps(payload), status, {'content-type': 'application/json'})

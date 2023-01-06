@@ -1,5 +1,3 @@
-import bson
-
 from flask import current_app, g, jsonify
 from werkzeug.local import LocalProxy
 import pymysql

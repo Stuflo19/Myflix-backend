@@ -25,5 +25,5 @@ Input #0, mov,mp4,m4a,3gp,3g2,mj2, from 'http://rtmp-server/mp4/Danger_River.mp4
     Metadata:
       handler_name    : SoundHandler
       vendor_id       : [0][0][0][0]
-[rtmp @ 0x559d100d6440] Server error: Already publishing
+[rtmp @ 0x55a78f549440] Server error: Already publishing
 rtmp://rtmp-server/stream/Danger_River: Operation not permitted

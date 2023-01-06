@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, current_app, make_response
-from .mongodb import get_movie
+from .mongodb import get_movie, get_genres
 from .sqldb import verify
 from .stream import initiate_stream
 from flask_cors import cross_origin
@@ -7,10 +7,17 @@ import sys
 
 api_page = Blueprint('api', __name__)
 
-@api_page.route('/movies', methods=['GET'])
+@api_page.route('/movies', methods=['GET', 'POST'])
 @cross_origin()
 def api_get_movies():
-    response = get_movie()
+    response = get_movie(request.json)
+
+    return jsonify(response)
+
+@api_page.route('/genres', methods=['GET'])
+@cross_origin()
+def api_get_genres():
+    response = get_genres()
 
     return jsonify(response)
 

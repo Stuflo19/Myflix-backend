@@ -2,8 +2,6 @@ FROM ubuntu
 
 RUN apt update
 RUN apt install python3-pip -y
-RUN apt install ffmpeg -y
-RUN apt install librtmp-dev -y
 
 RUN pip3 install FLASK
 RUN pip3 install Flask-PyMongo
@@ -14,13 +12,11 @@ RUN pip3 install devpi
 RUN pip3 install Flask_mysql
 RUN pip3 install cryptography
 RUN pip3 install gunicorn
-RUN pip3 install ffmpeg-python
-RUN pip3 install python-librtmp
 
 ENV FLASK_APP MyFlix_API.app
 ENV FLASK_DEBUG 1
 
-ENV MONGO_URI mongodb://root:password123@mongo/sample_mflix?authSource=admin
+ENV MONGO_URI mongodb://root:password123@mongo/myflix?authSource=admin
 
 ENV MYSQL_HOST sql
 ENV MYSQL_USER root
