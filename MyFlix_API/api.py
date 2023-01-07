@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify, current_app, make_response
 from .mongodb import get_movie, get_genres
-from .sqldb import verify
+from .sqldb import verify, create
 from .stream import initiate_stream
 from flask_cors import cross_origin
 import sys
@@ -31,6 +31,17 @@ def verification():
             return {"token": username}, 200
         else:
             return {"token": "error"}, 200
+
+@api_page.route('/create', methods=['GET', 'POST'])
+@cross_origin()
+def api_create_account():
+    if request.method == 'POST':
+        username = request.json['username']
+        password = request.json['password']
+        if create(username,password):
+            return {"result": True}, 200
+        else:
+            return {"result": False}, 200
 
 @api_page.route('/stream', methods=['GET', 'POST'])
 @cross_origin()

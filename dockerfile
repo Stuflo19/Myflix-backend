@@ -1,17 +1,9 @@
-FROM ubuntu
+FROM python:3.7.15-alpine3.17
 
-RUN apt update
-RUN apt install python3-pip -y
+RUN apk add build-base
+RUN apk add --no-cache openssl-dev libffi-dev
 
-RUN pip3 install FLASK
-RUN pip3 install Flask-PyMongo
-RUN pip3 install Flask-CORS
-RUN pip3 install python-dotenv
-RUN pip3 install Flask-socketio
-RUN pip3 install devpi
-RUN pip3 install Flask_mysql
-RUN pip3 install cryptography
-RUN pip3 install gunicorn
+RUN pip3 install pipenv
 
 ENV FLASK_APP MyFlix_API.app
 ENV FLASK_DEBUG 1
@@ -26,6 +18,7 @@ ENV MYSQL_DB netflix
 WORKDIR /app
 
 COPY . /app
+RUN pipenv install --system --ignore-pipfile
 
 # Development
 CMD ["flask", "run", "--host", "0.0.0.0"]
