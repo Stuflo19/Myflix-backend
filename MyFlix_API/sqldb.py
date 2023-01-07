@@ -1,9 +1,8 @@
-import bson
-
 from flask import current_app, g, jsonify
 from werkzeug.local import LocalProxy
 import pymysql
 from bson.json_util import dumps
+import bcrypt
 
 def get_sqldb():
 
@@ -16,11 +15,30 @@ sqldb = LocalProxy(get_sqldb)
 
 def verify(username, password):
     with sqldb.cursor() as cursor:
-        sql = "Select * FROM login WHERE username=%s and pass=%s"
-        cursor.execute(sql, (username, password))
+        sql = "Select * FROM login WHERE username=%s"
+        cursor.execute(sql, (username))
         results = cursor.fetchone()
-
-        if results is not None:
-            return results
+        
+        # Entered password
+        enteredPassword = password.encode('utf-8')
+        
+        if bcrypt.checkpw(enteredPassword, bytes(results[2], 'utf-8')):
+            return True
         else:
+            return False
+
+def create(username, password):
+    with sqldb.cursor() as cursor:
+        password = password.encode('utf-8')
+        hashedPwd = bcrypt.hashpw(password, bcrypt.gensalt(10)) 
+        
+        sql = "INSERT INTO login (username, pass) VALUES (%s,%s)"
+        values = (username, str(hashedPwd, 'UTF-8'))
+        result = cursor.execute(sql, values)
+
+        # Comitting the change to the DB
+        sqldb.commit()
+        if result:
+            return True
+        else:   
             return False
