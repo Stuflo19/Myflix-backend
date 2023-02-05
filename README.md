@@ -16,3 +16,5 @@ This application is deployed using Github Actions, Docker and Kubernetes. For th
 
 ### `Module takeaways`
 At the time of creating this application all of these technologies were new to me and required a steep learning curve but in the end after this assignment was finished I felt that I had a much greater understanding of all of these technologies involved and really saw the impact that docker can have.
+
+### Frontend: https://github.com/Stuflo19/Myflix-frontend 
